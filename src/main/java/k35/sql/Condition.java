@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class Condition {
+public final class Condition implements SqlBuilder {
 
     public enum Op {
         AND,
@@ -36,16 +36,18 @@ public final class Condition {
         return new Condition(Op.EXPR, new ArrayList<>(), Optional.ofNullable(expr));
     }
 
-    public String build() {
+    public String buildSql() {
 
         if (op == Op.EXPR)
             return expr.orElse("");
 
         final String joinOpStr = this.op == Op.OR ? "or" : "and";
-        return this.childs
-                .stream()
-                .map(Condition::build)
-                .collect(Collectors.joining(joinOpStr));
+        return "( "
+                + this.childs
+                        .stream()
+                        .map(Condition::buildSql)
+                        .collect(Collectors.joining(" " + joinOpStr + " "))
+                + " )";
     }
 
 }
