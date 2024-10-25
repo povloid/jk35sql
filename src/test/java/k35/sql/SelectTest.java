@@ -23,6 +23,11 @@ public class SelectTest {
                 Select.select().from("table1 a")
                         .leftJoin("table2 b").on(Condition.expression("b.a_id = a.id"))
                         .buildSql());
+
+        assertEquals("select * from table1 a left join table2 b on b.a_id = a.id",
+                Select.select().from("table1 a")
+                        .leftJoin("table2 b").on("b.a_id = a.id")
+                        .buildSql());
     }
 
     @Test
@@ -82,5 +87,14 @@ public class SelectTest {
                 Select.select("id", "count(*)").from(table).desc().buildSql());
         assertEquals("select id, count(*) from table1 order by id desc",
                 Select.select("id", "count(*)").from(table).orderBy("id").desc().buildSql());
+    }
+
+    @Test
+    public void testMap() {
+        assertEquals("select id, count(*) from table1 where id < 5",
+                Select.select("id", "count(*)")
+                        .from(table)
+                        .map(s -> s.where("id < 5"))
+                        .buildSql());
     }
 }

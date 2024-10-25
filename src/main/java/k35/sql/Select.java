@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public final class Select implements SqlBuilder {
@@ -38,6 +39,11 @@ public final class Select implements SqlBuilder {
     public record JoinChain(Select selectSqlBuider, Join join) {
         public Select on(Condition condition) {
             selectSqlBuider.addJoin(join.on(condition));
+            return selectSqlBuider;
+        }
+
+        public Select on(String expression) {
+            selectSqlBuider.addJoin(join.on(expression));
             return selectSqlBuider;
         }
     }
@@ -107,6 +113,10 @@ public final class Select implements SqlBuilder {
     public Select groupBy(String... fields) {
         this.groupByFields = Optional.ofNullable(fields);
         return this;
+    }
+
+    public Select map(UnaryOperator<Select> f) {
+        return f.apply(this);
     }
 
     public String buildSql() {
