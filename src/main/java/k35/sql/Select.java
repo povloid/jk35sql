@@ -48,6 +48,10 @@ public final class Select implements SqlBuilder {
         }
     }
 
+    public JoinChain innerJoin(String table) {
+        return new JoinChain(this, Join.innerJoin(table));
+    }
+
     public JoinChain leftJoin(String table) {
         return new JoinChain(this, Join.leftJoin(table));
     }
