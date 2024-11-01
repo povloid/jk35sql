@@ -1,4 +1,4 @@
-package k35.sql;
+package k35.sql.dsl.interfaces;
 
 /**
  * Строковый построитель

@@ -1,10 +1,12 @@
-package k35.sql;
+package k35.sql.dsl;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.function.UnaryOperator;
 
 import org.junit.Test;
+
+import k35.sql.dsl.common.Condition;
 
 public class ConditionTest {
 

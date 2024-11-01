@@ -1,8 +1,10 @@
-package k35.sql;
+package k35.sql.dsl.dml;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import k35.sql.dsl.common.Condition;
 
 public class JoinTest {
 

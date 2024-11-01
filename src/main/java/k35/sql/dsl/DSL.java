@@ -1,4 +1,9 @@
-package k35.sql;
+package k35.sql.dsl;
+
+import k35.sql.dsl.dml.Delete;
+import k35.sql.dsl.dml.Insert;
+import k35.sql.dsl.dml.Select;
+import k35.sql.dsl.dml.Update;
 
 public final class DSL {
 

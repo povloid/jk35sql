@@ -1,6 +1,8 @@
-package k35.sql;
+package k35.sql.dsl.common;
 
 import java.util.function.UnaryOperator;
+
+import k35.sql.dsl.interfaces.SqlBuilder;
 
 public final class Condition implements SqlBuilder {
 
@@ -219,7 +221,9 @@ public final class Condition implements SqlBuilder {
 	}
 
 	public Condition map(UnaryOperator<Condition> fn) {
-		return fn.apply(this);
+		final var newCondition = new Condition(this.expression);
+
+		return fn.apply(newCondition);
 	}
 
 	@Override
