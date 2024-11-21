@@ -185,6 +185,10 @@ public final class Condition implements SqlBuilder {
 			return value1 + " in ( " + value2 + " )";
 		}
 
+		public String notIn(String value2) {
+			return value1 + " not in ( " + value2 + " )";
+		}
+
 		public String isUnknown() {
 			return value1 + " is unknown";
 		}

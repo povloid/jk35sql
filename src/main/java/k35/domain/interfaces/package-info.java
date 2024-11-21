@@ -1,0 +1,1 @@
+package k35.domain.interfaces;
