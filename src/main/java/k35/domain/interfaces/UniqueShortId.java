@@ -1,5 +1,9 @@
 package k35.domain.interfaces;
 
-public interface UniqueShortId extends UniqueId<Short> {
+public interface UniqueShortId {
+
+	short getId();
+
+	void setId(short id);
 
 }
