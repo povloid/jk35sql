@@ -36,6 +36,10 @@ public final class Insert implements SqlBuilder, Map<Insert> {
 		return value(value.field(), value.parameter());
 	}
 
+	public Insert value(String field) {
+		return value(field, ":" + field);
+	}
+
 	public Insert value(String field, String parameter) {
 		final var newValues = new ArrayList<>(this.values);
 		newValues.add(new Value(field, parameter));
@@ -47,6 +51,7 @@ public final class Insert implements SqlBuilder, Map<Insert> {
 		return new Insert(table, values, Optional.of(Arrays.asList(fields)));
 	}
 
+	@Override
 	public Insert map(UnaryOperator<Insert> fn) {
 		final var newInsert = new Insert(table, values, returninig);
 		return fn.apply(newInsert);

@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
+import java.util.UUID;
 
 public final class Transform {
 
@@ -51,6 +52,10 @@ public final class Transform {
 		return rs.getString(field);
 	}
 
+	public UUID getUUID(String field) throws SQLException {
+		return UUID.fromString(rs.getString(field));
+	}
+
 	public BigDecimal getBigDecimal(String field) throws SQLException {
 		return rs.getBigDecimal(field);
 	}
@@ -65,6 +70,10 @@ public final class Transform {
 
 	public Date getTimestamp(String field) throws SQLException {
 		return new Date(rs.getTimestamp(field).getTime());
+	}
+
+	public <T> Optional<T> getOptional(String field, Class<T> c) throws SQLException {
+		return Optional.ofNullable(rs.getObject(field, c));
 	}
 
 	public Optional<Boolean> getOptionalBoolean(String field) throws SQLException {
@@ -88,6 +97,10 @@ public final class Transform {
 
 	public Optional<String> getOptionalString(String field) throws SQLException {
 		return Optional.ofNullable(rs.getString(field));
+	}
+
+	public Optional<UUID> getOptionalUUID(String field) throws SQLException {
+		return Optional.ofNullable(rs.getString(field)).map(UUID::fromString);
 	}
 
 	public Optional<BigDecimal> getOptionalBigDecimal(String field) throws SQLException {

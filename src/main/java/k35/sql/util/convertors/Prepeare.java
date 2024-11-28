@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
+import java.util.UUID;
 
 public final class Prepeare {
 
@@ -32,7 +33,7 @@ public final class Prepeare {
 		return new Prepeare(newMap);
 	}
 
-	public Prepeare addBollean(String param, boolean value) {
+	public Prepeare addBoolean(String param, boolean value) {
 		return addObject(param, value);
 	}
 
@@ -56,6 +57,10 @@ public final class Prepeare {
 		return addObject(param, value);
 	}
 
+	public Prepeare addUUID(String param, UUID uuid) {
+		return addObject(param, uuid);
+	}
+
 	public Prepeare addTime(String param, Date value) {
 		return addObject(param, new java.sql.Time(value.getTime()));
 	}
@@ -66,6 +71,10 @@ public final class Prepeare {
 
 	public Prepeare addTimestamp(String param, Date value) {
 		return addObject(param, new java.sql.Timestamp(value.getTime()));
+	}
+
+	public Prepeare addOptional(String param, Optional<?> ovalue) {
+		return addObject(param, ovalue.orElse(null));
 	}
 
 	public Prepeare addOptionalBoolean(String param, Optional<Boolean> ovalue) {
@@ -89,6 +98,10 @@ public final class Prepeare {
 	}
 
 	public Prepeare addOptionalString(String param, Optional<String> ovalue) {
+		return addObject(param, ovalue.orElse(null));
+	}
+
+	public Prepeare addOptionalUUID(String param, Optional<UUID> ovalue) {
 		return addObject(param, ovalue.orElse(null));
 	}
 
