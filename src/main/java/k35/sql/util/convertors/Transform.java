@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
@@ -72,8 +73,14 @@ public final class Transform {
 		return new Date(rs.getTimestamp(field).getTime());
 	}
 
-	public <T> Optional<T> getOptional(String field, Class<T> c) throws SQLException {
-		return Optional.ofNullable(rs.getObject(field, c));
+	@SuppressWarnings("unchecked")
+	public <T> T[] getArray(String field, Class<T> type) throws SQLException {
+		final var sqlArray = rs.getArray(field);
+		return (T[]) sqlArray.getArray();
+	}
+
+	public <T> Optional<T> getOptional(String field, Class<T> type) throws SQLException {
+		return Optional.ofNullable(rs.getObject(field, type));
 	}
 
 	public Optional<Boolean> getOptionalBoolean(String field) throws SQLException {
@@ -117,6 +124,17 @@ public final class Transform {
 
 	public Optional<Date> getOptionalTimestamp(String field) throws SQLException {
 		return Optional.ofNullable(rs.getTimestamp(field)).map(java.sql.Timestamp::getTime).map(Date::new);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> Optional<T[]> getOptionalArray(String field, Class<T> type) throws SQLException {
+		final var sqlArray = rs.getArray(field);
+
+		if (Objects.isNull(sqlArray)) {
+			return Optional.empty();
+		}
+
+		return Optional.of((T[]) sqlArray.getArray());
 	}
 
 }
