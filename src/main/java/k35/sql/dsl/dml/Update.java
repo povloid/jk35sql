@@ -43,6 +43,10 @@ public final class Update implements SqlBuilder, Map<Update> {
 		return setValue(parameter.field(), parameter.parameter());
 	}
 
+	public Update setValue(String field) {
+		return setValue(field, ":" + field);
+	}
+
 	public Update setValue(String field, String parameter) {
 		final var newSets = new ArrayList<>(this.sets);
 		newSets.add(new SetValue(field, parameter));
