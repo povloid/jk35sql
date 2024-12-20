@@ -41,6 +41,10 @@ public final class Transform {
 		return rs.getInt(field);
 	}
 
+	public int getIntFromNumeric(String field) throws SQLException {
+		return rs.getBigDecimal(field).intValue();
+	}
+
 	public short getShort(String field) throws SQLException {
 		return rs.getShort(field);
 	}
@@ -92,6 +96,11 @@ public final class Transform {
 		return i == null ? OptionalInt.empty() : OptionalInt.of(i);
 	}
 
+	public OptionalInt getOptionalIntFromNumeric(String field) throws SQLException {
+		final var i = rs.getBigDecimal(field);
+		return i == null ? OptionalInt.empty() : OptionalInt.of(i.intValue());
+	}
+
 	public OptionalLong getOptionalLong(String field) throws SQLException {
 		final var i = rs.getObject(field, Long.class);
 		return i == null ? OptionalLong.empty() : OptionalLong.of(i);
@@ -111,7 +120,7 @@ public final class Transform {
 	}
 
 	public Optional<BigDecimal> getOptionalBigDecimal(String field) throws SQLException {
-		return Optional.of(rs.getBigDecimal(field));
+		return Optional.ofNullable(rs.getBigDecimal(field));
 	}
 
 	public Optional<Date> getOptionalTime(String field) throws SQLException {
