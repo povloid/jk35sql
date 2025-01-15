@@ -1,101 +1,111 @@
 package k35.sql.dsl.dml;
 
-import static org.junit.Assert.assertEquals;
-
+import k35.sql.dsl.DSL;
+import k35.sql.dsl.common.Predicate;
 import org.junit.Test;
 
-import k35.sql.dsl.common.Condition;
+import static org.junit.Assert.assertEquals;
 
 public class SelectTest {
 
-	final String table = "table1";
+    final String table = "table1";
 
-	@Test
-	public void testGetSql() {
-		assertEquals("select * from table1", Select.select().from(table).buildSql());
-		assertEquals("select id from table1", Select.select("id").from(table).buildSql());
-		assertEquals("select id, name from table1",
-				Select.select("id", "name").from(table).buildSql());
-	}
+    @Test
+    public void testGetSql() {
+        assertEquals("select * from table1", DSL.select().from(table).sql());
+        assertEquals("select id from table1", DSL.select("id").from(table).sql());
+        assertEquals("select id, name from table1",
+                DSL.select("id, name").from(table).sql());
+    }
 
-	@Test
-	public void testJoin() {
-		assertEquals("select * from table1 a left join table2 b on b.a_id = a.id",
-				Select.select().from("table1 a")
-						.leftJoin("table2 b").on(Condition.expression("b.a_id = a.id"))
-						.buildSql());
+    @Test
+    public void testJoin() {
+        assertEquals("select * from table1 a left join table2 b on b.a_id = a.id",
+                DSL.select().from("table1 a")
+                        .leftJoin("table2 b").on(Predicate.of("b.a_id = a.id").sql())
+                        .sql());
 
-		assertEquals("select * from table1 a left join table2 b on b.a_id = a.id",
-				Select.select().from("table1 a")
-						.leftJoin("table2 b").on("b.a_id = a.id")
-						.buildSql());
-	}
+        assertEquals("select * from table1 a left join table2 b on b.a_id = a.id",
+                DSL.select().from("table1 a")
+                        .leftJoin("table2 b").on("b.a_id = a.id")
+                        .sql());
+    }
 
-	@Test
-	public void testGroupBy() {
-		assertEquals("select id, count(*) from table1 group by id",
-				Select.select("id", "count(*)").from(table).groupBy("id").buildSql());
+    @Test
+    public void testGroupBy() {
+        assertEquals("select id, count(*) from table1 group by id",
+                DSL.select("id, count(*)").from(table).groupBy("id").sql());
 
-		assertEquals("select id, name, count(*) from table1 group by id, name",
-				Select.select("id", "name", "count(*)").from(table).groupBy("id", "name")
-						.buildSql());
-	}
+        assertEquals("select id, name, count(*) from table1 group by id, name",
+                DSL.select("id, name, count(*)").from(table).groupBy("id", "name")
+                        .sql());
+    }
 
-	@Test
-	public void testLimit() {
-		assertEquals("select id from table1 limit :limit", Select.select("id").from(table).limit(":limit").buildSql());
-	}
+    @Test
+    public void testLimit() {
+        assertEquals("select id from table1 limit :limit", DSL.select("id").from(table).limit(":limit").sql());
+    }
 
-	@Test
-	public void testOffset() {
-		assertEquals("select id from table1 offset :offset",
-				Select.select("id").from(table).offset(":offset").buildSql());
-	}
+    @Test
+    public void testOffset() {
+        assertEquals("select id from table1 offset :offset",
+                DSL.select("id").from(table).offset(":offset").sql());
+    }
 
-	@Test
-	public void testOrderBy() {
-		assertEquals("select id, count(*) from table1 order by id",
-				Select.select("id", "count(*)").from(table).orderBy("id").buildSql());
+    @Test
+    public void testOrderBy() {
+        assertEquals("select id, count(*) from table1 order by id",
+                DSL.select("id, count(*)").from(table).orderBy("id").sql());
 
-		assertEquals("select id, name, count(*) as cnt from table1 order by id, name",
-				Select.select("id", "name", "count(*) as cnt").from(table).orderBy("id", "name")
-						.buildSql());
-	}
+        assertEquals("select id, name, count(*) as cnt from table1 order by id, name",
+                DSL.select("id, name, count(*) as cnt").from(table).orderBy("id", "name")
+                        .sql());
+    }
 
-	@Test
-	public void testWhere() {
-		assertEquals("select id, name from table1 where id > 100",
-				Select.select("id", "name").from(table).where(Condition.expression("id > 100"))
-						.buildSql());
+    @Test
+    public void testWhere() {
 
-		assertEquals("select id, name from table1 where id > 100",
-				Select.select("id", "name").from(table).where("id > 100")
-						.buildSql());
-	}
 
-	@Test
-	public void testAsc() {
-		assertEquals("select id, count(*) from table1",
-				Select.select("id", "count(*)").from(table).asc().buildSql());
-		assertEquals("select id, count(*) from table1 order by id asc",
-				Select.select("id", "count(*)").from(table).orderBy("id").asc().buildSql());
+        assertEquals("select id, name from table1",
+                DSL.select("id, name").from(table).where(" ")
+                        .sql());
 
-	}
+        assertEquals("select id, name from table1",
+                DSL.select("id, name").from(table).where(Predicate.of(" "))
+                        .sql());
 
-	@Test
-	public void testDesc() {
-		assertEquals("select id, count(*) from table1",
-				Select.select("id", "count(*)").from(table).desc().buildSql());
-		assertEquals("select id, count(*) from table1 order by id desc",
-				Select.select("id", "count(*)").from(table).orderBy("id").desc().buildSql());
-	}
+        assertEquals("select id, name from table1 where id > 100",
+                DSL.select("id, name").from(table).where("id > 100")
+                        .sql());
 
-	@Test
-	public void testMap() {
-		assertEquals("select id, count(*) from table1 where id < 5",
-				Select.select("id", "count(*)")
-						.from(table)
-						.map(s -> s.where("id < 5"))
-						.buildSql());
-	}
+        assertEquals("select id, name from table1 where id > 100",
+                DSL.select("id, name").from(table).where(Predicate.of("id > 100"))
+                        .sql());
+    }
+
+    @Test
+    public void testAsc() {
+        assertEquals("select id, count(*) from table1",
+                DSL.select("id, count(*)").from(table).asc().sql());
+        assertEquals("select id, count(*) from table1 order by id asc",
+                DSL.select("id, count(*)").from(table).orderBy("id").asc().sql());
+
+    }
+
+    @Test
+    public void testDesc() {
+        assertEquals("select id, count(*) from table1",
+                DSL.select("id, count(*)").from(table).desc().sql());
+        assertEquals("select id, count(*) from table1 order by id desc",
+                DSL.select("id, count(*)").from(table).orderBy("id").desc().sql());
+    }
+
+    @Test
+    public void testMap() {
+        assertEquals("select id, count(*) from table1 where id < 5",
+                DSL.select("id, count(*)")
+                        .from(table)
+                        .map(s -> s.where("id < 5"))
+                        .sql());
+    }
 }

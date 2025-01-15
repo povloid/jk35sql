@@ -2,7 +2,7 @@ package k35.domain.interfaces;
 
 public interface UniqueIntId {
 
-	int getId();
+    int getId();
 
-	void setId(int id);
+    void setId(int id);
 }

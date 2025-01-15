@@ -2,8 +2,8 @@ package k35.domain.interfaces;
 
 public interface UniqueLongId {
 
-	long getId();
+    long getId();
 
-	void setId(long id);
+    void setId(long id);
 
 }

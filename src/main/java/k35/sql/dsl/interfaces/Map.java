@@ -4,6 +4,6 @@ import java.util.function.UnaryOperator;
 
 public interface Map<T> {
 
-	public T map(UnaryOperator<T> fn);
+    T map(UnaryOperator<T> fn);
 
 }

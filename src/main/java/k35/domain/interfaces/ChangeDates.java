@@ -4,10 +4,10 @@ import java.util.Date;
 
 public interface ChangeDates {
 
-	Date getCreatedAt();
+    Date getCreatedAt();
 
-	Date getUpdatedAt();
+    Date getUpdatedAt();
 
-	void setUpdatedAt(Date date);
+    void setUpdatedAt(Date date);
 
 }
