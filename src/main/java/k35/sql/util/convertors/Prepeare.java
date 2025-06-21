@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public final class Prepeare {
 
@@ -73,24 +72,74 @@ public final class Prepeare {
     }
 
 
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
 
-    public Prepeare add(String param, List<?> values) {
-
+    public <T> Prepeare add(String param, List<T> values) {
         if (values == null) return addObject(param, null);
 
-        final var str = values.stream()
-                .map(value -> {
-                    if (value instanceof String) return "\"" + value + "\"";
-                    if (value instanceof Date o) return "\"" + dateFormat.format(o) + "\"";
-                    if (value instanceof LocalDateTime o) return "\"" + o.toString() + "\"";
-                    if (value instanceof LocalDate o) return "\"" + o.toString() + "\"";
-                    if (value instanceof LocalTime o) return "\"" + o.toString() + "\"";
-                    else return value + "";
-                }).collect(Collectors.joining(","));
+        final var firstElement = values.get(0);
 
-        return addObject(param, "{" + str + "}");
+        if (firstElement instanceof String)
+            return add(param, values.toArray(new String[values.size()]));
+
+        if (firstElement instanceof Integer)
+            return add(param, values.toArray(new Integer[values.size()]));
+
+        if (firstElement instanceof Date)
+            return add(param, values.toArray(new Date[values.size()]));
+
+        if (firstElement instanceof LocalDateTime)
+            return add(param, values.toArray(new LocalDateTime[values.size()]));
+
+        if (firstElement instanceof LocalDate)
+            return add(param, values.toArray(new LocalDate[values.size()]));
+
+        if (firstElement instanceof LocalTime)
+            return add(param, values.toArray(new LocalTime[values.size()]));
+
+        throw new IllegalArgumentException();
+    }
+
+    public Prepeare add(String param, Object[] values) {
+        return addObject(param, values);
+    }
+
+    public Prepeare add(String param, String[] values) {
+        return addObject(param, values);
+    }
+
+    public Prepeare add(String param, Integer[] values) {
+        return addObject(param, values);
+    }
+
+    public Prepeare add(String param, LocalDate[] values) {
+        return addObject(param,
+                Arrays.stream(values)
+                        .map(java.sql.Date::valueOf)
+                        .toArray(java.sql.Date[]::new));
+    }
+
+    public Prepeare add(String param, LocalTime[] values) {
+        return addObject(param,
+                Arrays.stream(values)
+                        .map(java.sql.Time::valueOf)
+                        .toArray(java.sql.Time[]::new));
+    }
+
+    public Prepeare add(String param, LocalDateTime[] values) {
+        return addObject(param,
+                Arrays.stream(values)
+                        .map(java.sql.Timestamp::valueOf)
+                        .toArray(java.sql.Timestamp[]::new));
+    }
+
+    public Prepeare add(String param, Date[] values) {
+        return addObject(param,
+                Arrays.stream(values)
+                        .map(Date::getTime)
+                        .map(java.sql.Timestamp::new)
+                        .toArray(java.sql.Timestamp[]::new));
     }
 
     public Prepeare add(String param, Date value) {
