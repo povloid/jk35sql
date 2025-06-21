@@ -198,6 +198,10 @@ public final class Prepeare {
         return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
     }
 
+    public Prepeare add(String param, LocalDateTime value) {
+        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    }
+
     public <T> Prepeare addOptional(String param, Optional<T> ovalue) {
         return addObject(param, ovalue.map(this::prepeare).orElse(null));
     }
