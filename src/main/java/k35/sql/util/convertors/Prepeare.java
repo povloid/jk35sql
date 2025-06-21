@@ -122,10 +122,6 @@ public final class Prepeare {
 
     }
 
-    public Prepeare add(String param, Object[] values) {
-        return addObject(param, values);
-    }
-
     public Prepeare add(String param, Boolean[] values) {
         return addObject(param, values);
     }
