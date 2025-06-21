@@ -152,28 +152,36 @@ public final class Prepeare {
 
     public Prepeare add(String param, LocalDate[] values) {
         return addObject(param,
-                Arrays.stream(values)
+                values == null
+                        ? null
+                        : Arrays.stream(values)
                         .map(this::prepeare)
                         .toArray(java.sql.Date[]::new));
     }
 
     public Prepeare add(String param, LocalTime[] values) {
         return addObject(param,
-                Arrays.stream(values)
+                values == null
+                        ? null
+                        : Arrays.stream(values)
                         .map(this::prepeare)
                         .toArray(java.sql.Time[]::new));
     }
 
     public Prepeare add(String param, LocalDateTime[] values) {
         return addObject(param,
-                Arrays.stream(values)
+                values == null
+                        ? null
+                        : Arrays.stream(values)
                         .map(this::prepeare)
                         .toArray(java.sql.Timestamp[]::new));
     }
 
     public Prepeare add(String param, Date[] values) {
         return addObject(param,
-                Arrays.stream(values)
+                values == null
+                        ? null
+                        : Arrays.stream(values)
                         .map(this::prepeare)
                         .toArray(java.sql.Timestamp[]::new));
     }
