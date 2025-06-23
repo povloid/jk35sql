@@ -79,49 +79,6 @@ public final class Prepeare {
         return addObject(param, value);
     }
 
-    public <T> Prepeare add(String param, List<T> values) {
-        if (values == null) return addObject(param, null);
-        if (values.isEmpty()) return addObject(param, new Object[0]);
-
-        final var firstElement = values.get(0);
-
-        if (firstElement instanceof Boolean)
-            return add(param, values.toArray(new Boolean[0]));
-
-        if (firstElement instanceof Short)
-            return add(param, values.toArray(new Short[0]));
-
-        if (firstElement instanceof Integer)
-            return add(param, values.toArray(new Integer[0]));
-
-        if (firstElement instanceof Long)
-            return add(param, values.toArray(new Long[0]));
-
-        if (firstElement instanceof BigDecimal)
-            return add(param, values.toArray(new BigDecimal[0]));
-
-        if (firstElement instanceof String)
-            return add(param, values.toArray(new String[0]));
-
-        if (firstElement instanceof UUID)
-            return add(param, values.toArray(new UUID[0]));
-
-        if (firstElement instanceof Date)
-            return add(param, values.toArray(new Date[0]));
-
-        if (firstElement instanceof LocalDateTime)
-            return add(param, values.toArray(new LocalDateTime[0]));
-
-        if (firstElement instanceof LocalDate)
-            return add(param, values.toArray(new LocalDate[0]));
-
-        if (firstElement instanceof LocalTime)
-            return add(param, values.toArray(new LocalTime[0]));
-
-        throw new IllegalArgumentException();
-
-    }
-
     public Prepeare add(String param, Boolean[] values) {
         return addObject(param, values);
     }
@@ -148,6 +105,26 @@ public final class Prepeare {
 
     public Prepeare add(String param, UUID[] values) {
         return addObject(param, values);
+    }
+
+    public Prepeare add(String param, Date value) {
+        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    }
+
+    public Prepeare add(String param, LocalTime value) {
+        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    }
+
+    public Prepeare add(String param, LocalDate value) {
+        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    }
+
+    public Prepeare add(String param, LocalDateTime value) {
+        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    }
+
+    public <T> Prepeare addOptional(String param, Optional<T> ovalue) {
+        return addObject(param, ovalue.map(this::prepeare).orElse(null));
     }
 
     public Prepeare add(String param, LocalDate[] values) {
@@ -185,25 +162,55 @@ public final class Prepeare {
                         .map(this::prepeare)
                         .toArray(java.sql.Timestamp[]::new));
     }
-
-    public Prepeare add(String param, Date value) {
-        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    
+    public Prepeare add(String param, List<Boolean> values, Boolean[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
     }
 
-    public Prepeare add(String param, LocalTime value) {
-        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    public Prepeare add(String param, List<Short> values, Short[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
     }
 
-    public Prepeare add(String param, LocalDate value) {
-        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    public Prepeare add(String param, List<Integer> values, Integer[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
     }
 
-    public Prepeare add(String param, LocalDateTime value) {
-        return addObject(param, Optional.ofNullable(value).map(this::prepeare).orElse(null));
+    public Prepeare add(String param, List<BigDecimal> values, BigDecimal[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
     }
 
-    public <T> Prepeare addOptional(String param, Optional<T> ovalue) {
-        return addObject(param, ovalue.map(this::prepeare).orElse(null));
+    public Prepeare add(String param, List<String> values, String[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
+    }
+
+    public Prepeare add(String param, List<UUID> values, UUID[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
+    }
+
+    public Prepeare add(String param, List<Date> values, Date[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
+    }
+
+    public Prepeare add(String param, List<LocalDate> values, LocalDate[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
+    }
+
+    public Prepeare add(String param, List<LocalTime> values, LocalTime[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
+    }
+
+    public Prepeare add(String param, List<LocalDateTime> values, LocalDateTime[] initArray) {
+        if (values == null) return addObject(param, null);
+        return add(param, values.toArray(initArray));
     }
 
     private java.sql.Timestamp prepeare(Date value) {

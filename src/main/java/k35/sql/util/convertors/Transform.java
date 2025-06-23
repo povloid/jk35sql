@@ -278,12 +278,12 @@ public final class Transform {
         return getArrayOfStringsOptional(field).orElse(null);
     }
 
-    public Optional<List<String>> getStringsOptional(String field) throws SQLException {
+    public Optional<List<String>> getListOfStringsOptional(String field) throws SQLException {
         return getArrayOfStringsOptional(field).map(List::of);
     }
 
     public List<String> getListOfStrings(String field) throws SQLException {
-        return getStringsOptional(field).orElse(null);
+        return getListOfStringsOptional(field).orElse(null);
     }
 
     // Date ---------------------------------------------------------------------------------------------------
