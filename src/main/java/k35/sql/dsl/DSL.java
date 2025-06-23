@@ -1,6 +1,6 @@
 package k35.sql.dsl;
 
-import k35.sql.dsl.common.Table;
+import k35.sql.dsl.common.TableSimple;
 import k35.sql.dsl.dml.Delete;
 import k35.sql.dsl.dml.Insert;
 import k35.sql.dsl.dml.Select;
@@ -34,7 +34,7 @@ public final class DSL {
             return Insert.into(table);
         }
 
-        public Insert into(Table table) {
+        public Insert into(TableSimple table) {
             return Insert.into(table.sql());
         }
     }
@@ -47,7 +47,7 @@ public final class DSL {
         return Update.update(table);
     }
 
-    public static Update update(Table table) {
+    public static Update update(TableSimple table) {
         return Update.update(table.sql());
     }
 
@@ -56,7 +56,7 @@ public final class DSL {
             return Delete.from(table);
         }
 
-        public Delete from(Table table) {
+        public Delete from(TableSimple table) {
             return Delete.from(table.sql());
         }
     }
