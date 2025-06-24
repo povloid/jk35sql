@@ -197,7 +197,9 @@ public final class Transform {
         return Optional.ofNullable(rs.getArray(field))
                 .map(o -> {
                     try {
-                        return (Integer[]) o.getArray();
+                        return Arrays.stream((Number[]) o.getArray())
+                                .map(Number::intValue)
+                                .toArray(Integer[]::new);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
