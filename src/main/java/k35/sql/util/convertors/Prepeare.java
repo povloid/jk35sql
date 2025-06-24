@@ -162,7 +162,7 @@ public final class Prepeare {
                         .map(this::prepeare)
                         .toArray(java.sql.Timestamp[]::new));
     }
-    
+
     public Prepeare add(String param, List<Boolean> values, Boolean[] initArray) {
         if (values == null) return addObject(param, null);
         return add(param, values.toArray(initArray));
