@@ -9,15 +9,15 @@ public class TableTest {
     @Test
     public void test() {
 
-        final var table1 = TableSimple.of("table");
+        final var table = Table.of("table");
 
-        assertEquals("table", table1.sql());
-
-        assertEquals("table.*", table1.getAll().sql());
-        assertEquals("table.a", table1.get("a").sql());
-        assertEquals("table.a, table.b", table1.get("a").get("b").sql());
-        assertEquals("table.a, table.b as c", table1.get("a").get("b", "c").sql());
-
+        assertEquals("table", table.sql());
+        assertEquals("table.*", table.get().sql());
+        assertEquals("table.*", table.getAll().sql());
+        assertEquals("table.a", table.get("a").sql());
+        assertEquals("table.a as b", table.get("a", "b").sql());
+        assertEquals("table.a as aa, table.b as bb", table.get("a", "aa").get("b", "bb").sql());
+        assertEquals("table.*, table.a as aa, table.b as bb", table.get().get("a", "aa").get("b", "bb").sql());
     }
 
 }
