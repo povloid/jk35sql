@@ -153,6 +153,7 @@ public class PredicateTest extends TestCase {
     }
 
     public void testTestAnd1() {
+        assertEquals(Predicate.of(table1.get("id")).equal(":id").and(table2.get("id")).equal(":id2").sql(), "table1.id = :id and table2.id = :id2");
         assertEquals(Predicate.of(table1.get("id")).equal(":id").and(Predicate.of(table2.get("id")).equal(":id2")).sql(), "table1.id = :id and table2.id = :id2");
     }
 
