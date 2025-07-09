@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * SQL Table...
  */
-public final class Table implements SqlBuilder {
+public class Table implements SqlBuilder {
 
     public static final class FieldExpression implements SqlBuilder {
 
@@ -53,9 +53,9 @@ public final class Table implements SqlBuilder {
         }
     }
 
-    private final String table;
+    protected final String table;
 
-    private Table(String table) {
+    protected Table(String table) {
         this.table = table;
     }
 

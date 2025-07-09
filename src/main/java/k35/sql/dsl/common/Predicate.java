@@ -186,6 +186,17 @@ public final class Predicate implements SqlBuilder {
     }
 
     /**
+     * between :from and :to
+     *
+     * @param from - sql value
+     * @param to   - sql value
+     * @return next predicate
+     */
+    public Predicate between(SqlBuilder from, SqlBuilder to) {
+        return between(from.sql(), to.sql());
+    }
+
+    /**
      * not between :from and :to
      *
      * @param from - sql value
@@ -297,7 +308,7 @@ public final class Predicate implements SqlBuilder {
      * @return next predicate
      */
     public Predicate in(String value2) {
-        return new Predicate(value1 + " in ( " + value2 + " )");
+        return new Predicate(value1 + " in (" + value2 + ")");
     }
 
     /**
@@ -317,7 +328,7 @@ public final class Predicate implements SqlBuilder {
      * @return next predicate
      */
     public Predicate notIn(String value2) {
-        return new Predicate(value1 + " not in ( " + value2 + " )");
+        return new Predicate(value1 + " not in (" + value2 + ")");
     }
 
     /**
