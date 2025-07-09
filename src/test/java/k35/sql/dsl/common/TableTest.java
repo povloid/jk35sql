@@ -30,8 +30,8 @@ public class TableTest {
         public Field name = Field.of(this, "name");
         public Field description = Field.of(this, "description");
 
-        public Field[] fields = {id, name, description};
-
+        public Fields fields1 = Fields.of(id, name, description);
+        public Fields fields = Fields.of(this);
     }
 
     final Table1 table1 = new Table1();
@@ -45,6 +45,13 @@ public class TableTest {
         assertEquals(table1.description.sql(), "table1.description");
 
         assertEquals(table1.name.as("name_1").sql(), "table1.name as name_1");
+
+        assertEquals(
+                this.table1.fields1.sql(),
+                "table1.id, table1.name, table1.description");
+        assertEquals(
+                this.table1.fields.sql(),
+                "table1.id, table1.name, table1.description");
     }
 
 }
