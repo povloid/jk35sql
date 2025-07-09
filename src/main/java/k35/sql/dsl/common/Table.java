@@ -5,6 +5,7 @@ import k35.sql.dsl.interfaces.SqlBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * SQL Table...
@@ -33,18 +34,24 @@ public class Table implements SqlBuilder {
         }
 
         public FieldExpression get() {
-            this.terms.add(this.table.sql() + ".*");
-            return new FieldExpression(this.table, new ArrayList<>(this.terms));
+            return new FieldExpression(this.table,
+                    Stream.concat(this.terms.stream(),
+                                    List.of(this.table.sql() + ".*").stream())
+                            .toList());
         }
 
         public FieldExpression get(String field) {
-            this.terms.add(this.table.sql() + "." + field);
-            return new FieldExpression(this.table, new ArrayList<>(this.terms));
+            return new FieldExpression(this.table,
+                    Stream.concat(this.terms.stream(),
+                                    List.of(this.table.sql() + "." + field).stream())
+                            .toList());
         }
 
         public FieldExpression get(String field, String alias) {
-            this.terms.add(this.table.sql() + "." + field + " as " + alias);
-            return new FieldExpression(this.table, new ArrayList<>(this.terms));
+            return new FieldExpression(this.table,
+                    Stream.concat(this.terms.stream(),
+                                    List.of(this.table.sql() + "." + field + " as " + alias).stream())
+                            .toList());
         }
 
         @Override
