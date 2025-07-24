@@ -150,6 +150,7 @@ public class PredicateTest extends TestCase {
 
     public void testTestAnd() {
         assertEquals(Predicate.of(table1.get("id")).and("1=1").sql(), "table1.id and 1=1");
+        assertEquals(Predicate.of(table1.get("id")).and("1").equal("1").sql(), "table1.id and 1 = 1");
     }
 
     public void testTestAnd1() {
@@ -163,6 +164,7 @@ public class PredicateTest extends TestCase {
 
     public void testTestOr() {
         assertEquals(Predicate.of(table1.get("id")).or("1=1").sql(), "table1.id or 1=1");
+        assertEquals(Predicate.of(table1.get("id")).or("1").equal("1").sql(), "table1.id or 1 = 1");
     }
 
     public void testTestOr1() {
@@ -187,6 +189,16 @@ public class PredicateTest extends TestCase {
 
     public void testIlike() {
         assertEquals(Predicate.of(table1.get("name")).ilike(":name").sql(), "table1.name ilike :name");
+    }
+
+    public void testSimilarTo() {
+        assertEquals(Predicate.of(table1.get("name")).similarTo(":name").sql(), "table1.name similar to :name");
+        assertEquals(Predicate.of(table1.get("name")).similarTo(":name", "#").sql(), "table1.name similar to :name escape '#'");
+    }
+
+    public void testNotSimilarTo() {
+        assertEquals(Predicate.of(table1.get("name")).notSimilarTo(":name").sql(), "table1.name not similar to :name");
+        assertEquals(Predicate.of(table1.get("name")).notSimilarTo(":name", "#").sql(), "table1.name not similar to :name escape '#'");
     }
 
 }

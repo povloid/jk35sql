@@ -47,10 +47,10 @@ public class Table implements SqlBuilder {
                             .toList());
         }
 
-        public FieldExpression get(String field, String alias) {
+        public FieldExpression get(String field, String as) {
             return new FieldExpression(this.table,
                     Stream.concat(this.terms.stream(),
-                                    List.of(this.table.sql() + "." + field + " as " + alias).stream())
+                                    List.of(this.table.sql() + "." + field + " as " + as).stream())
                             .toList());
         }
 

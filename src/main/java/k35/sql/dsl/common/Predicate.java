@@ -467,6 +467,46 @@ public final class Predicate implements SqlBuilder {
     }
 
     /**
+     * SIMILAR TO Regular Expressions
+     *
+     * @param pattern
+     * @return next predicate
+     */
+    public Predicate similarTo(String pattern) {
+        return new Predicate(this.value1 + " similar to " + pattern);
+    }
+
+    /**
+     * SIMILAR TO Regular Expressions
+     *
+     * @param pattern
+     * @return next predicate
+     */
+    public Predicate similarTo(String pattern, String escapeCharacter) {
+        return new Predicate(this.value1 + " similar to " + pattern + " escape '" + escapeCharacter + "'");
+    }
+
+    /**
+     * NOT SIMILAR TO Regular Expressions
+     *
+     * @param pattern
+     * @return next predicate
+     */
+    public Predicate notSimilarTo(String pattern) {
+        return new Predicate(this.value1 + " not similar to " + pattern);
+    }
+
+    /**
+     * NOT SIMILAR TO Regular Expressions
+     *
+     * @param pattern
+     * @return next predicate
+     */
+    public Predicate notSimilarTo(String pattern, String escapeCharacter) {
+        return new Predicate(this.value1 + " not similar to " + pattern + " escape '" + escapeCharacter + "'");
+    }
+
+    /**
      * Build SQL
      */
     @Override

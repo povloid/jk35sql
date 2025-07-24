@@ -52,6 +52,13 @@ public class TableTest {
         assertEquals(
                 this.table1.fields.sql(),
                 "table1.id, table1.name, table1.description");
+
+        assertEquals(
+                Fields.of(table1.id, table1.name, table1.description).sql(),
+                "table1.id, table1.name, table1.description");
+        assertEquals(
+                Fields.of(table1).sql(),
+                "table1.id, table1.name, table1.description");
     }
 
 }
